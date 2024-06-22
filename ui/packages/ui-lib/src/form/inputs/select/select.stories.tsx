@@ -1,7 +1,8 @@
-import { MenuItem } from '@mui/material';
+import { MenuItem, FormHelperText } from '@mui/material';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import SelectInput from './select';
+import * as DocBlock from '@storybook/blocks';
 
 type CustomArgs = React.ComponentProps<typeof SelectInput> & {
   disabled?: boolean;
@@ -17,24 +18,37 @@ const meta = {
   component: SelectInput,
   parameters: {
     layout: 'centered',
+    tags: ['autodocs'],
+    docs: {
+      toc: true,
+      page: () => (
+        <>
+          <DocBlock.Title />
+          <DocBlock.Subtitle />
+          <DocBlock.Description />
+          <DocBlock.Stories />
+        </>
+      ),
+    },
   },
 
   argTypes: {
     disabled: {
-      options: [false, true],
-      control: { type: 'inline-radio' },
+      type: 'boolean',
     },
     error: {
-      options: [false, true],
-      control: { type: 'inline-radio' },
+      type: 'boolean',
     },
     required: {
-      options: [false, true],
-      control: { type: 'inline-radio' },
+      type: 'boolean',
     },
     size: {
       options: ['small', 'medium'],
       control: { type: 'inline-radio' },
+    },
+    width: {
+      type: 'string',
+      defaultValue: '200px',
     },
   },
 
@@ -74,13 +88,49 @@ export default meta;
 
 type Story = StoryObj<CustomArgs>;
 
-export const Basic: Story = {
+export const Custom: Story = {
   args: {
     label: 'Select',
     disabled: false,
     error: false,
     required: false,
     size: 'small',
+    options: ['First', 'Second', 'Third'],
+    width: '200px',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    label: 'Small Select',
+    size: 'small',
+    options: ['First', 'Second', 'Third'],
+    width: '200px',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    label: 'Medium Select',
+    size: 'medium',
+    options: ['First', 'Second', 'Third'],
+    width: '200px',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Disabled Select',
+    disabled: true,
+    options: ['First', 'Second', 'Third'],
+    width: '200px',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    label: 'Error Select',
+    error: true,
     options: ['First', 'Second', 'Third'],
     width: '200px',
   },
