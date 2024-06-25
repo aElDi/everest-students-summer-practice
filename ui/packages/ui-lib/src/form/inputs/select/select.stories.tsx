@@ -1,4 +1,4 @@
-import { MenuItem, FormHelperText } from '@mui/material';
+import { FormHelperText, MenuItem } from '@mui/material';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import SelectInput from './select';
@@ -16,16 +16,40 @@ type CustomArgs = React.ComponentProps<typeof SelectInput> & {
 const meta = {
   title: 'Select',
   component: SelectInput,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
-    tags: ['autodocs'],
     docs: {
+      source: {
+        code: null,
+      },
       toc: true,
       page: () => (
         <>
           <DocBlock.Title />
           <DocBlock.Subtitle />
           <DocBlock.Description />
+          <DocBlock.Source
+            code={`
+<SelectInput
+          selectFieldProps={{
+            error,
+          }}
+          formControlProps={{
+            sx: { width },
+            disabled,
+            required,
+            size,
+          }}
+          name={'select'}
+          label={label}
+        >
+          <MenuItem> Option </MenuItem>
+</SelectInput>
+            `}
+          />
+          <DocBlock.Primary />
+          <DocBlock.Controls />
           <DocBlock.Stories />
         </>
       ),
@@ -59,7 +83,7 @@ const meta = {
     size,
     options,
     width,
-    ...args
+    label,
   }) {
     const methods = useForm();
 
@@ -76,7 +100,7 @@ const meta = {
             size,
           }}
           name={'select'}
-          label={args.label}
+          label={label}
         >
           {options?.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
         </SelectInput>
@@ -89,6 +113,7 @@ export default meta;
 type Story = StoryObj<CustomArgs>;
 
 export const Custom: Story = {
+  tags: ['!autodocs'],
   args: {
     label: 'Select',
     disabled: false,
@@ -101,6 +126,17 @@ export const Custom: Story = {
 };
 
 export const Small: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `\`\`\`ts
+        <SelectInput formControlProps={size: "small"}>
+  Options...
+</SelectInput>
+        \`\`\``
+      }
+    }
+  },
   args: {
     label: 'Small Select',
     size: 'small',
@@ -110,6 +146,17 @@ export const Small: Story = {
 };
 
 export const Medium: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `\`\`\`ts
+        <SelectInput formControlProps={size: "medium"}>
+  Options...
+</SelectInput>
+        \`\`\``
+      }
+    }
+  },
   args: {
     label: 'Medium Select',
     size: 'medium',
@@ -119,6 +166,17 @@ export const Medium: Story = {
 };
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `\`\`\`ts
+        <SelectInput formControlProps={disabled: true}>
+  Options...
+</SelectInput>
+        \`\`\``
+      }
+    }
+  },
   args: {
     label: 'Disabled Select',
     disabled: true,
@@ -128,6 +186,17 @@ export const Disabled: Story = {
 };
 
 export const Error: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: `\`\`\`ts
+        <SelectInput formControlProps={error: true}>
+  Options...
+</SelectInput>
+        \`\`\``
+      }
+    }
+  },
   args: {
     label: 'Error Select',
     error: true,
